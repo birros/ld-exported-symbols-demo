@@ -3,6 +3,11 @@
 This repo shows how `ld` exports / hides static library symbols linked to a
 dynamic library.
 
+> **Note**
+> By default, `ld` exports all symbols from linked static libraries.
+> To hide symbols from a specific static library, we need to use this flag:
+> `--exclude-libs libstatic.a`.
+
 ## Usage
 
 ```shell
