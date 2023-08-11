@@ -1,3 +1,30 @@
-docker compose run --rm --build -ti app bash
+# LD exported symbols demo
 
-nm -D src/bar/libbar.so | grep hello
+This repo shows how `ld` exports / hides static library symbols linked to a
+dynamic library.
+
+## Usage
+
+```shell
+$ make env # optional
+$ make
+
+RULE run
+
+SYMBOLS FROM libdynamic.so (hidden libstatic.a symbols)
+0000000000001020 T hello_from_dynamic
+
+SYMBOLS FROM libdynamic_all.so
+0000000000001030 T hello_from_dynamic
+0000000000001050 T hello_from_static
+
+RUN prog
+Hello from prog!
+
+CALL hello_from_dynamic FROM libdynamic.so (dynamically linked):
+Hello from static!
+Hello from dynamic!
+
+CALL hello_from_static FROM libdynamic_all.so (dynamically opened):
+Hello from static!
+```
